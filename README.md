@@ -24,4 +24,3 @@ Features Convert plain text to HTML Convert HTML to Markdown Intuitive UI for ea
 ` npm install` Run the project:
 
 `npm start` The application will start, and you can access it at http://localhost:3000 or the port specified.
-# Downmark-Converter

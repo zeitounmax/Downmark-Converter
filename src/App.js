@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+
+import React, { useState, useEffect } from "react";
+import { ThemeProvider, CssBaseline, Switch } from "@mui/material";
+import getTheme from "./theme";
+import Converter from "./TextToMarkdownConverter";
 
 function App() {
+  const [mode, setMode] = useState(() => {
+    const savedMode = localStorage.getItem("downmark-mode");
+    return savedMode ? savedMode : "light";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("downmark-mode", mode);
+  }, [mode]);
+
+  const toggleMode = () => {
+    setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={getTheme(mode)}>
+      <CssBaseline />{" "}
+      {/* Cela réinitialise et applique les styles de base en fonction du thème */}
+      <div className="App">
+        <Switch checked={mode === "dark"} onChange={toggleMode} />
+        <Converter />
+      </div>
+    </ThemeProvider>
   );
 }
 
